@@ -4,6 +4,6 @@ namespace App\Handlers\Sort;
 
 interface SortInterface
 {
-    function sortArr($arrayay): array;
+    function sortArr($array): array;
 
 }

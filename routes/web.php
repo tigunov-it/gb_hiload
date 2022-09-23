@@ -15,11 +15,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
 Route::get('/', function () {
     return view('welcome');
 });
-
 
 Route::get('/hello', function () {
     return view('hello');
@@ -28,3 +26,23 @@ Route::get('/hello', function () {
 Route::get('/test', [RecursiaController::class, 'index']);
 
 Route::get('/sort', [\App\Http\Controllers\SortController::class, 'sort']);
+
+Route::get('/memcache', function () {
+    Cache::store('memcached')->put('Name', 'John Doe from memcache');
+    $value = Cache::get('Name');
+    dd($value);
+});
+
+Route::get('/redis', function () {
+    Cache::store('redis')->put('Name', 'John Doe from redis');
+    $value = Cache::get('Name');
+    dd($value);
+});
+
+Route::get('/clear', function() {
+    Artisan::call('cache:clear');
+    Artisan::call('config:cache');
+    Artisan::call('view:clear');
+    Artisan::call('route:clear');
+    Cache::flush();
+    return "Кэш очищен.";});
